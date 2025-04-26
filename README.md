@@ -1,10 +1,10 @@
-# NebulaForm Documentation
+<h1 align="center">Nebula Form</h1>
 
 <p align="center">
   <img src="./utils/assets/NebulaForm.png" alt="NebulaForm" width="40%" />
 </p>
 
-NebulaForm is a lightweight, type-safe form management library for Vue.js applications. It provides a simple and intuitive API for handling form state, validation, and submission.
+Nebula Form is a lightweight, type-safe form management library for Vue.js applications. It provides a simple and intuitive API for handling form state, validation, and submission.
 
 ## Table of Contents
 
