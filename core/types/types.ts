@@ -1,9 +1,11 @@
+import { Ref } from 'vue'
+
 export interface FormOptions<T> {
 	defaultValues?: Partial<T>
 }
 
 export interface FormValues {
-	values: number | string
+	value: number | string
 	message: string
 }
 
@@ -19,7 +21,7 @@ export interface FormRule {
 
 export interface UseFormReturn<T> {
 	values: T
-	errors: Record<keyof T, string | null>
+	errors: Ref<Partial<Record<keyof T, string | null>>>
 	register: <K extends keyof T>(
 		name: K,
 		options?: FormRule
@@ -27,6 +29,14 @@ export interface UseFormReturn<T> {
 		name: K
 		value: T[K]
 		onInput: (e: Event) => void
+		onBlur: (e: Event) => void
 	}
 	handleSubmit: (cb: (data: T) => void) => (e: Event) => void
+	reset: (name?: keyof T) => void
+	setValue: (name: keyof T, value: T[keyof T]) => void
+	watch: (
+		name: keyof T | '*',
+		callback: (value: any, oldValue: any) => void,
+		options?: { deep?: boolean; immediate?: boolean }
+	) => () => void
 }

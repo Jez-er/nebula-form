@@ -1,4 +1,11 @@
-import { reactive, ref } from 'vue'
+import { reactive, Ref, ref } from 'vue'
+import {
+	createRegister,
+	createState,
+	createSubmission,
+	createValidation,
+	createWatch,
+} from '../feature/useForm'
 import type { FormOptions, FormRule, UseFormReturn } from '../types/types'
 
 export function useForm<T extends object = any>(
@@ -8,73 +15,41 @@ export function useForm<T extends object = any>(
 	const errors = ref<Partial<Record<keyof T, string | null>>>({})
 	const fieldRules = new Map<keyof T, FormRule>()
 
-	function register<K extends keyof T>(name: K, rules?: FormRule) {
-		return {
-			name,
-			value: (values as any)[name],
-			onInput: (e: Event) => {
-				const target = e.target as HTMLInputElement
-				;(values as T)[name] = target.value as any
-				errors.value[name] = null
+	const { validateField } = createValidation<T>(
+		errors as Ref<Partial<Record<keyof T, string | null>>>
+	)
 
-				if (rules) {
-					validateField(name, target.value, rules)
-				}
-			},
-		}
-	}
+	const register = createRegister<T>(
+		values as T,
+		errors.value,
+		validateField,
+		fieldRules
+	)
 
-	function validateField<K extends keyof T>(
-		name: K,
-		value: any,
-		rules: FormRule
-	): boolean {
-		if (rules.required && (!value || value.toString().trim() === '')) {
-			errors.value[name] =
-				typeof rules.required === 'string'
-					? rules.required
-					: 'Это поле обязательно'
-			return false
-		}
+	const { validateAllFields, handleSubmit } = createSubmission<T>(
+		values as T,
+		errors.value,
+		fieldRules,
+		validateField
+	)
 
-		if (
-			rules.minLength &&
-			value &&
-			value.toString().length < rules.minLength.values
-		) {
-			errors.value[name] = rules.minLength.message
-			return false
-		}
+	const { reset, setValue } = createState<T>(
+		values as T,
+		errors.value,
+		fieldRules,
+		validateField,
+		options?.defaultValues
+	)
 
-		return true
-	}
-
-	function validateAllFields(): boolean {
-		let isValid = true
-		errors.value = {} // сброс перед проверкой
-
-		for (const [name, rules] of fieldRules.entries()) {
-			const value = (values as any)[name]
-			const valid = validateField(name, value, rules)
-			if (!valid) isValid = false
-		}
-
-		return isValid
-	}
-
-	function handleSubmit(cb: (data: T) => void) {
-		return (e: Event) => {
-			e.preventDefault()
-			if (validateAllFields()) {
-				cb(JSON.parse(JSON.stringify(values)) as T)
-			}
-		}
-	}
+	const { watch } = createWatch<T>(values as T)
 
 	return {
 		values: values as T,
-		errors: errors.value,
+		errors: errors as Ref<Partial<Record<keyof T, string | null>>>,
 		register,
 		handleSubmit,
+		reset,
+		setValue,
+		watch,
 	}
 }
