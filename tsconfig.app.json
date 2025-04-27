@@ -1,18 +1,15 @@
 {
 	"extends": "./tsconfig.json",
 	"compilerOptions": {
-		"target": "ES2022",
-		"lib": ["ES2023", "DOM"],
-		"module": "ESNext",
-		"moduleResolution": "Node",
-		"esModuleInterop": true,
+		"declaration": true,
+		"moduleResolution": "node",
+		"declarationMap": true,
+		"emitDeclarationOnly": true,
+		"outDir": "dist",
 		"skipLibCheck": true,
-		"forceConsistentCasingInFileNames": true
+		"noEmit": false,
+		"downlevelIteration": true,
+		"composite": false
 	},
-	"include": [
-		"playground/**/*.ts",
-		"playground/**/*.vue",
-		"core/**/*.ts",
-		"core/**/*.vue"
-	]
+	"include": ["core/**/*.ts", "core/**/*.vue"]
 }
