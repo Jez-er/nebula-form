@@ -10,7 +10,8 @@
 	],
 	"scripts": {
 		"dev": "vite",
-		"build": "vue-tsc -b && vite build",
+		"test": "npx vitest run",
+		"build": "vue-tsc -b && npm run test && vite build",
 		"preview": "vite preview",
 		"pub:alfa": "npm publish --tag alfa",
 		"pub:beta": "npm publish --tag beta",
@@ -28,6 +29,7 @@
 		"@vue/tsconfig": "^0.7.0",
 		"typescript": "~5.7.2",
 		"vite": "^6.3.1",
+		"vitest": "^3.1.2",
 		"vue-tsc": "^2.2.8"
 	}
 }

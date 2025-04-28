@@ -26,14 +26,14 @@ export function useForm<T extends object = any>(
 		fieldRules
 	)
 
-	const { validateAllFields, handleSubmit } = createSubmission<T>(
+	const { handleSubmit } = createSubmission<T>(
 		values as T,
 		errors.value,
 		fieldRules,
 		validateField
 	)
 
-	const { reset, setValue } = createState<T>(
+	const { reset, setValue, getValue } = createState<T>(
 		values as T,
 		errors.value,
 		fieldRules,
@@ -50,6 +50,7 @@ export function useForm<T extends object = any>(
 		handleSubmit,
 		reset,
 		setValue,
+		getValue,
 		watch,
 	}
 }

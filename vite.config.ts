@@ -1,9 +1,14 @@
 import vue from '@vitejs/plugin-vue'
 import path from 'path'
-import { defineConfig } from 'vite'
 import dts from 'vite-plugin-dts'
+import { configDefaults, defineConfig } from 'vitest/config'
 
 export default defineConfig({
+	test: {
+		globals: true,
+		environment: 'node',
+		exclude: [...configDefaults.exclude, 'e2e/**'],
+	},
 	plugins: [
 		vue(),
 		dts({
