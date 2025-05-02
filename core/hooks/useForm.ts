@@ -30,7 +30,8 @@ export function useForm<T extends object = any>(
 		values as T,
 		errors.value,
 		fieldRules,
-		validateField
+		validateField,
+		options?.resolver
 	)
 
 	const { reset, setValue, getValue } = createState<T>(

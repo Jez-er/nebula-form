@@ -2,6 +2,12 @@ import { Ref } from 'vue'
 
 export interface FormOptions<T> {
 	defaultValues?: Partial<T>
+	resolver?: Resolver<T>
+}
+
+export type Resolver<T> = (values: T) => {
+	values?: T
+	errors?: Partial<Record<keyof T, string>>
 }
 
 export interface FormValues {
