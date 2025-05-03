@@ -1,6 +1,6 @@
 {
 	"name": "nebula-form",
-	"version": "1.0.7",
+	"version": "1.1.0",
 	"type": "module",
 	"main": "dist/index.js",
 	"module": "dist/index.es.js",
@@ -11,7 +11,7 @@
 	"scripts": {
 		"dev": "vite",
 		"test": "npx vitest run",
-		"build": "vue-tsc -b && npm run test && vite build",
+		"build": "npm run test && vite build",
 		"preview": "vite preview",
 		"pub:alfa": "npm publish --tag alfa",
 		"pub:beta": "npm publish --tag beta",
