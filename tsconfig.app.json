@@ -11,5 +11,5 @@
 		"downlevelIteration": true,
 		"composite": false
 	},
-	"include": ["core/**/*.ts", "core/**/*.vue"]
+	"include": ["core/**/*.ts", "tests/**/*.test.ts"]
 }
